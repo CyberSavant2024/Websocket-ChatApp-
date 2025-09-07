@@ -18,7 +18,12 @@ function App() {
       alert('Please enter a room ID')
       return
     }
-    // reuse existing socket if already connected
+  // compute WS URL from env (Vite) or default to same host and backend port
+  const defaultProto = location.protocol === 'https:' ? 'wss' : 'ws'
+  const defaultWs = `${defaultProto}://${location.hostname}:5030`
+  const wsUrl = import.meta.env.VITE_WS_URL || defaultWs
+
+  // reuse existing socket if already connected
     if (ws && ws.readyState === WebSocket.OPEN) {
       // already connected
       ws.send(JSON.stringify({ type: 'join', payload: { roomId } }))
@@ -26,7 +31,7 @@ function App() {
       return
     }
 
-    const socket = new WebSocket('ws://localhost:5000')
+  const socket = new WebSocket(wsUrl)
 
     socket.onopen = () => {
       socket.send(JSON.stringify({ type: 'join', payload: { roomId } }))

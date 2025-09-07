@@ -68,3 +68,23 @@ Do not commit your `.env` — it's already covered by `.gitignore`.
 
 ---
 If you want, I can also create a small `server-check` script to verify the WebSocket endpoint, or add CI (GitHub Actions) to run lint/tests before push.
+
+## Deploying (Vercel + Fly.io)
+
+Recommended free combo:
+- Frontend: Vercel (static, free tier) — deploy the `frontend` folder.
+- Backend: Fly.io (free allocation supports WebSockets) — deploy the `backend` folder as a Docker app.
+
+Vercel (frontend)
+1. Sign in to Vercel and create a new project, import your GitHub repo and select the `frontend` directory.
+2. In Project Settings → Environment Variables, add `VITE_WS_URL` with the production backend URL (e.g. `wss://your-app.fly.dev`).
+3. Deploy. Vercel will build the frontend and host it with TLS.
+
+Fly.io (backend)
+1. Install `flyctl` and log in: `flyctl auth login`.
+2. From the `backend` directory, run `flyctl launch` and follow prompts. Use the generated Dockerfile or let Fly create one.
+3. Deploy with `flyctl deploy`.
+4. Fly will provide a domain like `https://your-app.fly.dev`. Use `wss://your-app.fly.dev` as `VITE_WS_URL`.
+
+Docker (optional)
+- A `backend/Dockerfile` is provided for building a container image for the backend. Use it if deploying to Fly, DigitalOcean App Platform, or other container hosts.
