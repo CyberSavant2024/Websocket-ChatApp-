@@ -61,8 +61,8 @@ wss.on('connection', socket => {
             if (!roomId) return;
             const usersInRoom = allUsers.filter(user => user.roomId === roomId);
             usersInRoom.forEach(user => {
-                // only send to other sockets and ensure socket is open (readyState === 1)
-                if (user.socket !== socket && user.socket.readyState === 1) {
+                // send to all sockets in the room (including sender) if open
+                if (user.socket && user.socket.readyState === 1) {
                     try {
                         user.socket.send(JSON.stringify({
                             type: 'chat',
