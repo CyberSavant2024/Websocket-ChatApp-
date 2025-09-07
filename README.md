@@ -54,23 +54,6 @@ Do not commit your `.env` — it's already covered by `.gitignore`.
 - Server broadcasts messages of shape `{ type: 'chat', message, sender }` to other clients in the room.
 - Server broadcasts `{ type: 'users', count }` to all clients in the room when users join/leave.
 
-## Git push (simple)
-If you haven't set a remote yet:
-
-```powershell
-git remote add origin git@github.com:<your-username>/<repo>.git
-git branch -M main
-git push -u origin main
-```
-
-If the repo is already initialized and you only want to commit current changes:
-
-```powershell
-cd chat
-git add -A
-git commit -m "Prepare repo: add README and polish UI"
-git push
-```
 
 ## Next improvements (suggested)
 - Proper authentication and persistent messages (DB storage).
