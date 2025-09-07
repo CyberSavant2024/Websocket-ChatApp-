@@ -9,7 +9,8 @@ import dotenv from "dotenv"
 dotenv.config()
 
 // Normalize port from environment (trim whitespace and convert to number)
-const port = Number(process.env.PORT?.toString().trim()) || 5030;
+
+const port = Number(process.env.PORT?.toString().trim()) ;
 
 const wss = new WebSocketServer({ port });
 
@@ -93,5 +94,3 @@ function broadcastUserCount(roomId) {
         }
     });
 }
-
-
